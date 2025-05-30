@@ -3,9 +3,9 @@
 This is an implementation of the paper "Spatial clustering pattern discovery through supervised learning".
 Spatial patterns and relationships are crucial for statistical modeling and inference across various fields. This study develops a novel approach using supervised random forest to compute similarity scores between locations, effectively capturing spatial dependencies of a response variable. The approach begins by enriching location coordinates, enabling random forest to split space into irregular shaped subspaces. The similarity score is then derived from the proportion of trees in which two locations fall in the same node for the same values of other predictors. From the resulting similarity matrix, eigen-scores and cluster labels are extracted and integrated into predictive models such as XGBoost, GWR, and random forest. Two simulations and real data sets (house data and ocean data) indicate that the similarity matrix can capture more spatial information and significantly enhances the predictive performance of models than competing methods.
 ## Usage
-Here, I gave an example of simulating data with two dimensional coordinates. 
+Here, I gave an example of simulating data with two dimensional coordinates using selected parameters.
 ```
-run runsims(ntrain,ntest,nvalid,nclust,num_eigen,npred,ntr,nps,ndir,npcn)
+run runsims(ntrain=5000,ntest=1000,nvalid=1000,nclust=10,num_eigen=10,npred=8,ntr=50,nps=10,ndir=18,npcn=10)
 ```
 Note: 
   1. ntrain: the number of training data
