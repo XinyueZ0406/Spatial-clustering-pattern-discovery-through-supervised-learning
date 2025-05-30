@@ -63,9 +63,7 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
   
   train_sim_ev = spat_sim %*% u
   test_sim_ev  = test_sim %*% u
-  
-  ## compute ARI
-  result = compare_ARI(spat_sim,npcn,data)
+
   ##fit xgboost model with features+eigenvectors
   
   dtrain <-
@@ -81,6 +79,18 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
   result1 = compare_xgb_MSE(dtrain,dtest,dvalid)
   
   ##fit xgboost model with features+group label
+  hc = hclust(as.dist(1 - spat_sim), method = "average")
+  groups <- cutree(hc, k = nclust)
+
+  ## compute ARI
+  ARI1 = adjustedRandIndex(as.factor(groups), as.factor(data$cluster_train))
+  groups_test2 = assign_test_clusters(test_similarity_matrix = 1 - test_sim[-valid.index,],training_cluster_labels = groups)
+
+  ARI2 = adjustedRandIndex(as.factor(groups_test2), as.factor(data$cluster_test[-valid.index]))
+  
+  groups_valid2 = assign_test_clusters(test_similarity_matrix = 1 - test_sim[valid.index,],training_cluster_labels = groups)
+  ARI3 = adjustedRandIndex(as.factor(groups_valid2), as.factor(data$cluster_test[valid.index]))
+  
   
   train_all_sim3=cbind(as.data.frame(data$XX_train), as.factor(groups))
   colnames(train_all_sim3)[dim(train_all_sim3)[2]]='g'
@@ -110,11 +120,22 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
   print(result)
 }
 
-
+#parameter candidates 
 cr_list=c(9,18,36,90,180)
 tree_list=c(50,100,200,300,400)
 p_list=c(10,50,100,200,400)
 clust_list=c(9,10,11)
+parameter_combinations <- expand.grid(cr = cr_list, tree = tree_list, s = s_list, clust = clust_list)
+for (i in 1:nrow(parameter_combinations){
+  #m
+  cr_num=parameter_combinations[i,1]
+  #N
+  tree_num=parameter_combinations[i,2]
+  #p
+  s_num=parameter_combinations[i,3]
+  #k
+  clust_num=parameter_combinations[i,4]
+  runsims(ntrain,ntest,nvalid,nclust,num_eigen,npred,ntr,nps,ndir,npcn)}
 
-runsims(ntrain,ntest,nvalid,nclust,num_eigen,npred,ntr,nps,ndir,npcn)
+
 
