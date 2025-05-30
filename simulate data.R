@@ -37,8 +37,8 @@ simulate_data<-function(ncluster,ntrain,ntest,npred){
   ))
 }
 
-runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num_eigen=10,npred=8
-                  ntr=tree_num,nps=p_num,ndir=cr_num,npcn=clust_num){
+runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num_eigen=10,
+                  npred=8,ntr=tree_num,nps=p_num,ndir=cr_num,npcn=clust_num){
   
   data<-simulate_data(ncluster=nclust,ntrain=ntrain,ntest=ntest+nvalid,npred=8)
   valid.index <- createDataPartition(data$cluster_test, p = nvalid/(nvalid+ntest), list = FALSE)
