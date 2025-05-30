@@ -61,6 +61,7 @@ compare_xgb_MSE<-function(dtrain,dtest,dvalid){
       maximize = F
     )
   index1 = which.min(xgb_sim$evaluation_log$val_rmse)
+  #use best nround to refit xgboost 
   xgb_sim <-
     xgb.train (
       params = params,
