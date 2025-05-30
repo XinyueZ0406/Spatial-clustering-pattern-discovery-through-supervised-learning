@@ -118,6 +118,14 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
   
   result = c(result,result1,result3)
   print(result)
+  return(list('data'=data,
+              'valid.index'=valid.index,
+              'spat_sim'=spat_sim,
+              'test_sim'=test_sim,
+              'groups_train'=groups,
+              'groups_test'=groups_test2,
+              'groups_valid'=groups_valid2,
+              'result'=result))
 }
 
 #parameter candidates 
