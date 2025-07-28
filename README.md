@@ -5,7 +5,7 @@ Spatial patterns and relationships are crucial for statistical modeling and infe
 ## Usage
 Here, I gave an example of simulating data with two dimensional coordinates using selected parameters.
 ```
-run runsims(ntrain=5000,ntest=1000,nvalid=1000,nclust=10,num_eigen=10,npred=8,ntr=50,nps=10,ndir=18,npcn=10)
+run runsims(ntrain=5000,ntest=1000,nvalid=1000,nclust=10,num_eigen=10,npred=8,ntr=200,nps=50,ndir=18,npcn=10)
 ```
 Note: 
   1. ntrain: the number of training data
