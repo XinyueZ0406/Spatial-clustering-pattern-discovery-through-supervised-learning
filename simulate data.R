@@ -116,7 +116,7 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
   
   result3 = compare_xgb_MSE(dtrain,dtest,dvalid)
   
-  result = c(result,result1,result3)
+  result = c(ARI1,ARI2,ARI3,result1,result3)
   print(result)
   return(list('data'=data,
               'valid.index'=valid.index,
@@ -128,22 +128,6 @@ runsims<-function(ntrain=5000,ntest=10000,nvalid=1000,simlist=NULL,nclust=10,num
               'result'=result))
 }
 
-#parameter candidates 
-cr_list=c(9,18,36,90,180)
-tree_list=c(50,100,200,300,400)
-p_list=c(10,50,100,200,400)
-clust_list=c(9,10,11)
-parameter_combinations <- expand.grid(cr = cr_list, tree = tree_list, s = s_list, clust = clust_list)
-for (i in 1:nrow(parameter_combinations){
-  #m
-  cr_num=parameter_combinations[i,1]
-  #N
-  tree_num=parameter_combinations[i,2]
-  #p
-  s_num=parameter_combinations[i,3]
-  #k
-  clust_num=parameter_combinations[i,4]
-  runsims(ntrain,ntest,nvalid,nclust,num_eigen,npred,ntr,nps,ndir,npcn)}
 
 
 

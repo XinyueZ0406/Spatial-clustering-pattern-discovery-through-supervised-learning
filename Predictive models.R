@@ -71,9 +71,9 @@ compare_xgb_MSE<-function(dtrain,dtest,dvalid){
       print_every_n = 50,
       maximize = F
     )
-  result1 = c(mean((predict(xgb_sim1, dtrain) - getinfo(dtrain,"label")) ^ 2),
-              mean((predict(xgb_sim1, dvalid) - getinfo(dvalid,"label")) ^ 2),
-              mean((predict(xgb_sim1, dtest) - getinfo(dtest,"label")) ^ 2))
+  result1 = c(mean((predict(xgb_sim, dtrain) - getinfo(dtrain,"label")) ^ 2),
+              mean((predict(xgb_sim, dvalid) - getinfo(dvalid,"label")) ^ 2),
+              mean((predict(xgb_sim, dtest) - getinfo(dtest,"label")) ^ 2))
   return(result1)
   
 }
