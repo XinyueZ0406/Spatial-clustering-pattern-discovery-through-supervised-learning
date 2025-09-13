@@ -142,8 +142,11 @@ assign_test_clusters <- function(test_similarity_matrix, training_cluster_labels
 
 
 
+# Read the ocean climatology dataset directly from the GitHub repository
+# Source: https://github.com/brorfred/ocean_clustering
+# (use the "Raw" link for the CSV file in that repo)
+od <- read.csv("https://raw.githubusercontent.com/brorfred/ocean_clustering/main/data/tabulated_geospatial_montly_clim_360_720_ver_0_2_5.csv")
 
-od=read.csv("~/Desktop/tabulated_geospatial_montly_clim_360_720_ver_0_2_5.csv")
 #remove the columns with NaN values
 od=na.omit(od)
 rownames(od) <- od$X
@@ -251,16 +254,20 @@ library(RColorBrewer)
 library(dplyr)
 getPalette = colorRampPalette(brewer.pal(9, "Set1"))
 
-od=read.csv("~/Desktop/tabulated_geospatial_montly_clim_360_720_ver_0_2_5.csv")
-plot_data_g=cbind(od[which(od$X %in% rownames(s)),c("lat","lon")],g=as.factor(ocean_groups))
-
+plot_data_g=as.data.frame(cbind(lat=asin(all_loc_train_g$z),lon= atan2(all_loc_train_g$y, all_loc_train_g$x),
+                  g=as.factor(ocean_groups)))
+cols=c("lat","lon")
+plot_data_g[cols]=lapply(plot_data_g[cols],function(x) x*180/pi)
 basemap(limits = c(-180, 180, -90, 90),
         land.col = "#eeeac4", land.border.col = NA)+
   geom_point(data=plot_data_g,aes(x=lon, y=lat,color=as.factor(g)),size=1)+
   scale_color_manual(values = sample(getPalette(55)))+theme(legend.position="none")
 
 ##plot first eigen-scores
-plot_data_es=cbind(od[which(od$X %in% rownames(s)),c("lat","lon")],eig_1=ocean_ev[,1])
+plot_data_es=as.data.frame(cbind(lat=asin(all_loc_train_eig$z),lon= atan2(all_loc_train_eig$y, all_loc_train_eig$x),
+                                ocean_ev))
+colnames(plot_data_es)[3:ncol(plot_data_es)]=paste0("eig_",seq(1,25,1))
+plot_data_es[cols]=lapply(plot_data_es[cols],function(x) x*180/pi)
 basemap(limits = c(-180, 180, -90, 90),
         land.col = "#eeeac4", land.border.col = NA)+
   geom_point(data=plot_data_es,aes(x=lon, y=lat,color=eig_1))+scale_color_gradient(
