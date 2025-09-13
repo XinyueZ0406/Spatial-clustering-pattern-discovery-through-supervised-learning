@@ -18,3 +18,13 @@ Note:
   8. nps: the number of pseudo observations (P)
   9. ndir: the number of enriched coordinates (M)
   10. npcn: the number of predicted clusters
+## Ocean data
+Here, I also provided the full workflow (ocean_data.R) for our ocean clustering analysis. Specifically, it includes:
+  1. Data preprocessing: Load and clean the ocean climatology dataset.
+  2. RF_Sim computation: Construct the random forest–based similarity matrix from ocean features.
+  3. Clustering: Apply hierarchical clustering on the RF_Sim matrix to obtain cluster labels.
+  4. Eigen-scores: Perform eigen-decomposition on the similarity matrix to extract eigen-scores that summarize spatial structure.
+  5. Prediction with XGBoost: Train XGBoost models using ocean features combined with either cluster labels or eigen-scores, and evaluate predictive  performance.
+  6. Visualization:
+     (i) Plot spatial clustering results on a world map.
+     (ii) Plot selected eigen-scores to visualize spatial patterns.
